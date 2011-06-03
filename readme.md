@@ -36,3 +36,11 @@ This config includes OrgMode, Erlang Mode (and associated tools), and
 some Python tools.  You can comment out the loading of any one of
 these features in the config-runner.el file in the emacs_libs
 directory if you do not wish to use them.
+
+This config also includes Wrangler, a refactor tool for Erlang.  In order to get it to work you need to take the following steps after cloning the repository:
+1) open a terminal window and navigate to the ~/emacs_libs/wrangler-0.9.2.4/ directory
+2) type "./configure" and hit enter
+3) type "make" and hit enter
+4) type "sudo make install" and hit enter
+
+Once this is complete your emacs should start without error.
