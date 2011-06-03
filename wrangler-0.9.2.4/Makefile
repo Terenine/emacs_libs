@@ -5,8 +5,8 @@ prefix      = /usr/local
 exec_prefix = ${prefix}
 datarootdir = ${prefix}/share
 datadir     = ${datarootdir}
-erl         = /usr/local/bin//erl
-erlc        = /usr/local/bin//erlc
+erl         = /usr/local/bin/erl
+erlc        = /usr/local/bin/erlc
 
 ELISP_DIR = ${datadir}/wrangler/elisp
 EBIN_DIR = ${datadir}/wrangler/ebin
