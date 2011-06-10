@@ -44,8 +44,8 @@
 	;;	(color-theme-goldenrod)
 	;;	(color-theme-robin-hood)
 	;;	(color-theme-gnome2)
-	;; 	(color-theme-ld-dark)
-	(color-theme-clarity)
+	 	(color-theme-ld-dark)
+;;	(color-theme-clarity)
 
 ;; 	The value is in 1/10pt, so 100 will give you 10pt, etc.
 (custom-set-faces
@@ -61,11 +61,11 @@
 		:underline nil 
 		:slant normal 
 		:weight normal
-		:height 140 	;; The value is in 1/10pt, so 100 will give you 10pt, etc.
+		:height 150 	;; The value is in 1/10pt, so 100 will give you 10pt, etc.
 		:width normal
 		:foundry "unknown" 
 		:family "DejaVu Sans"
-		;;	:family "Consolas"
+		;;:family "Consolas"
 	)))))
 
 (require 'dircolors)
