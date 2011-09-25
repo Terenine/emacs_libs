@@ -18,7 +18,7 @@
         (setq inferior-erlang-machine-options 
 			'(
 			"-sname" "emacs" 
-			"-setcookie" "taco"
+;;			"-setcookie" "taco"
 			"-pa" "apps/*/ebin" 
 			;"-boot" "start_sasl"
 			))
