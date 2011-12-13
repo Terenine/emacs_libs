@@ -1,9 +1,9 @@
 ;;(add-to-list 'load-path (cons file-name-directoy "org-7.5/lisp/")
-(add-to-list 'load-path "~/emacs_libs/org-7.5/lisp/")
+;;(add-to-list 'load-path "~/emacs_libs/org-7.5/lisp/")
 
 (require 'my-config)
 (require 'python-config)
-(require 'org-config)
+;;(require 'org-config)
 
 
 (set-frame-height (selected-frame) 75) 
