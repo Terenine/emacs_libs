@@ -152,5 +152,60 @@
 (setq auto-mode-alist
    (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
- 
+;;(add-to-list 'load-path "~/emacs_libs/cedet-1.0.1/common")
+(load-file "~/emacs_libs/cedet-1.0.1/common/cedet.el")
+(semantic-load-enable-excessive-code-helpers)
+(require 'semantic-ia)
+
+
+;; Enable EDE (Project Management) features
+(global-ede-mode 1)
+
+ (add-to-list 'load-path
+	      "~/emacs_libs/ecb-2.40")
+(require 'ecb)
+
+ ;; Rinari
+(add-to-list 'load-path "~/emacs_libs/rinari")
+(require 'rinari)
+
+ ;;; nxml (HTML ERB template support)
+(add-to-list 'load-path "~/emacs_libs/nxhtml")
+     (load "~/emacs_libs/nxhtml/autostart.el")
+
+(add-to-list 'load-path "~/emacs_libs/nxhtml/util")
+(require 'mumamo-fun)
+     (setq mumamo-chunk-coloring 'submode-colored)
+     (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . eruby-html-mumamo))
+     
+     (setq
+      nxhtml-global-minor-mode t
+      mumamo-chunk-coloring 'submode-colored
+      nxhtml-skip-welcome t
+      indent-region-mode t
+      rng-nxml-auto-validate-flag nil
+      nxml-degraded t)
+     (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+
+
+
+(autoload 'test-case-mode "test-case-mode" nil t)
+(autoload 'enable-test-case-mode-if-test "test-case-mode")
+(autoload 'test-case-find-all-tests "test-case-mode" nil t)
+(autoload 'test-case-compilation-finish-run-all "test-case-mode")
+
+(add-hook 'find-file-hook 'enable-test-case-mode-if-test)
+
+(require 'tempo-snippets)
+
+(require 'window-numbering)
+(window-numbering-mode 1)
+
+  (add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+
 (provide 'my-config)
