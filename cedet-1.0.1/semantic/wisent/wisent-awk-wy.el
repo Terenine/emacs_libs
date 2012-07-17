@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2002 David Ponce
 
-;; Author: Chris Meadows <chris@mint-vm>
-;; Created: 2012-01-21 06:41:57-0500
+;; Author: Chris Meadows <chirsmeadows@Meadows-MacBook-Pro.local>
+;; Created: 2012-03-26 21:47:40-0400
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 

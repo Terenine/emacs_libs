@@ -1,6 +1,6 @@
 ;;; cedet-build.el --- Build CEDET within Emacs.
 
-;; Copyright (C) 2008, 2009, 2012 Eric M. Ludlam
+;; Copyright (C) 2008, 2009 Eric M. Ludlam
 
 ;; Author: Eric M. Ludlam <eric@siege-engine.com>
 ;; X-RCS: $Id: cedet-build.el,v 1.12 2009-12-28 14:16:12 zappo Exp $
