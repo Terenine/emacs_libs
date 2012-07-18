@@ -1,8 +1,10 @@
-(setq emacs-lib-path "~/emacs_libs")
+(setq emacs-lib-path "~/emacs_libs/")
 
 (setq mac_option_modifier 'meta);  sets the Option key as Meta
 ;; change "~/elisp/" as appropiate
 (setq load-path (cons emacs-lib-path load-path))
+(add-to-list 'load-path (concat emacs-lib-path "yasnippet-0.6.1c"))
+
 
 (require 'config-runner)
 
@@ -170,7 +172,7 @@
 ;; YASnippet
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory (cons emacs-lib-path "/snippets/"))
+(yas/load-directory (concat emacs-lib-path "yasnippet-0.6.1c/snippets/"))
 ; end YASnippet
 ; ----------------------------------------------------------------------
 

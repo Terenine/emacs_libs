@@ -1,0 +1,5 @@
+#contributor : David Brady <dbrady@shinybit.com>
+#name : <a href...><img ...></a>
+# --
+<a href="/images/$1_big.jpg" title="$2"><img src="/images/$1_portrait.jpg" title="$2" alt="$2" height="$3" width="$4" /><br /><font size="-1">Click for larger version</font></a>
+$0
