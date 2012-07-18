@@ -134,6 +134,7 @@
 ; End enable linum mode for various modes
 ; ----------------------------------------------------------------------
 
+
 ; ----------------------------------------------------------------------
 ;; Do civilized backup names.  Added by dbrady 2003-03-07, taken from
 ;; http://emacswiki.wikiwikiweb.de/cgi-bin/wiki.pl?BackupDirectory
@@ -157,6 +158,10 @@
 (setq default-tab-width 2)
 ; end tabs and line navigation
 ; ----------------------------------------------------------------------
+
+
+;; Bind C-c M-f to auto-fill-mode.
+(global-set-key (kbd "\C-c M-f") 'auto-fill-mode)
 
 ;; column number mode - show current column number
 (column-number-mode t)

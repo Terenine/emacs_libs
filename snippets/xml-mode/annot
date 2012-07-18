@@ -1,0 +1,14 @@
+#name: Annotate
+# --
+<xs:annotation>
+  <xs:documentation>
+    <description>${1:description}</description>
+    <notes>${2:notes}</notes>
+    <valid_values>${3:valid_values}</valid_values>
+    <examples>
+      <example>${4:example1}</example>
+      <example>${5:example2}</example>
+    </examples>
+  </xs:documentation>
+</xs:annotation>
+$0

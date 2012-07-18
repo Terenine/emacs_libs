@@ -138,6 +138,9 @@
 ;;(require 'python-config)
 (require 'ruby-config)
 
+;; comment helpers from dbrady (could probably be replaced with snippets)
+(require 'comment-config)
+
 ;; Add some Git goodies
 (setq load-path (cons "~/emacs_libs/magit" load-path))
 (require 'magit)
