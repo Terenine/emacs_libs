@@ -1,7 +1,8 @@
+(setq emacs-lib-path "~/emacs_libs")
 
 (setq mac_option_modifier 'meta);  sets the Option key as Meta
 ;; change "~/elisp/" as appropiate
-(setq load-path (cons "~/emacs_libs" load-path))
+(setq load-path (cons emacs-lib-path load-path))
 
 (require 'config-runner)
 
@@ -35,7 +36,7 @@
 (add-to-list 'org-export-latex-classes
              '("article"
                "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))  
+               ("\\section{%s}" . "\\section*{%s}")))
 (add-to-list 'org-export-latex-classes
           '("koma-article"
              "\\documentclass{scrartcl}"
@@ -91,7 +92,82 @@
  '(default ((t (:inherit nil :stipple nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "unknown" :family "DejaVu Sans")))))
 
 
-;; I use this.  Maybe others will.
+;; Turn on linum-mode by default
+(require 'linum)
+; DO NOT ENABLE LINUM MODE GLOBALLY!
+; linum crashes org-mode. Happily, org-mode overrides C-c l.
+; org mode appears to have seized this all round. What gives?
+(global-set-key "\C-c l" 'linum-mode)
+
+; ok to use mode hooks to auto-enable linum-mode, though
+(defun enable-linum-mode ()
+  (linum-mode t))
+
+; ----------------------------------------------------------------------
+; Automatically enable linum mode for various modes
+(setq modes-to-hook-with-linum '(c-mode-hook
+                                 csv-mode-hook
+                                 emacs-lisp-mode-hook
+                                 coffee-mode-hook
+                                 feature-mode-hook
+                                 java-mode-hook
+                                 espresso-mode-hook
+                                 haml-mode-hook
+                                 lisp-mode-hook
+                                 nxml-mode-hook
+                                 php-mode-hook
+                                 ruby-mode-hook
+                                 sass-mode-hook
+                                 scss-mode-hook
+                                 sh-mode-hook
+                                 text-mode-hook
+                                 textile-mode-hook
+                                 xml-mode-hook
+                                 yaml-mode-hook))
+
+(defun hook-linum-mode (mode)
+  (add-hook mode 'enable-linum-mode))
+
+(while modes-to-hook-with-linum
+  (hook-linum-mode (car modes-to-hook-with-linum))
+  (setq modes-to-hook-with-linum (cdr modes-to-hook-with-linum)))
+; End enable linum mode for various modes
+; ----------------------------------------------------------------------
+
+; ----------------------------------------------------------------------
+;; Do civilized backup names.  Added by dbrady 2003-03-07, taken from
+;; http://emacswiki.wikiwikiweb.de/cgi-bin/wiki.pl?BackupDirectory
+(setq
+ backup-by-copying t         ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/saves"))        ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)          ; use versioned backups
+; end civilized backup names
+; ----------------------------------------------------------------------
+
+; ----------------------------------------------------------------------
+; tabs and line navigation
+(global-set-key "\M-g" 'goto-line)
+(setq-default c-basic-offset 2)
+(setq-default sh-basic-offset 2)
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 2)
+; end tabs and line navigation
+; ----------------------------------------------------------------------
+
+;; column number mode - show current column number
+(column-number-mode t)
+
+; ----------------------------------------------------------------------
+;; YASnippet
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory (cons emacs-lib-path "/snippets/"))
+; end YASnippet
+; ----------------------------------------------------------------------
 
 
 (defun swap-values (symbol1 symbol2)
@@ -101,7 +177,7 @@ Return the former value of SYMBOL1, the final value of SYMBOL2."
     (set symbol1 (symbol-value symbol2))
     (set symbol2 x)))
 
-(defun transpose-regions-allow-empty (startr1 endr1 startr2 endr2 &optional 
+(defun transpose-regions-allow-empty (startr1 endr1 startr2 endr2 &optional
 leave-markers)
   "Like `transpose-regions', but allow empty regions."
   (if (> startr1 endr1)
