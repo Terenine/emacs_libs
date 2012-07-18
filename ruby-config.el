@@ -1,7 +1,7 @@
 
-;; Rinari
-(add-to-list 'load-path "~/emacs_libs/rinari")
-(require 'rinari)
+;; ;; Rinari
+;; (add-to-list 'load-path "~/emacs_libs/rinari")
+;; (require 'rinari)
 
  ;;; nxml (HTML ERB template support)
 (add-to-list 'load-path "~/emacs_libs/nxhtml")
