@@ -162,11 +162,41 @@
 ; ----------------------------------------------------------------------
 
 
+; ----------------------------------------------------------------------
+; misc helpful keybindings
 ;; Bind C-c M-f to auto-fill-mode.
 (global-set-key (kbd "\C-c M-f") 'auto-fill-mode)
 
 ;; column number mode - show current column number
 (column-number-mode t)
+; ----------------------------------------------------------------------
+
+
+; ----------------------------------------------------------------------
+; reload-buffer
+; Seriously, why doesn't this already exist? Reloads the current
+; buffer.  find-alternate-file will sort of already do this; if you do
+; not supply an argument to it it will reload the current
+; buffer... but it will switch you to another buffer when it does
+; it. All this function does is find-alt and then switch you back.
+;
+; TODO: This breaks down when you have multiple buffers containing the
+; same file basename, e.g. app/models/user.rb and spec/models/user.rb
+; because one of the buffers will have the buffername "user.rb (2)".
+; The buffer will be reloaded correctly but won't get switched to. Not
+; entirely sure why. Ideally it would be nice to be able to find a
+; buffer by the complete pathname it is visiting, as this would remain
+; constant and unique.
+(defun reload-buffer()
+  (interactive)
+  (let ((buffername (buffer-name)))
+    (find-alternate-file buffername)
+    (switch-to-buffer buffername)))
+; override the binding for find-alternate-file to be reload-buffer,
+; since that's what I always use it for.
+(global-set-key (kbd "\C-x C-v") 'reload-buffer)
+; end reload-buffer
+; ----------------------------------------------------------------------
 
 ; ----------------------------------------------------------------------
 ;; YASnippet
