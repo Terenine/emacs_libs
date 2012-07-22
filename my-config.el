@@ -183,5 +183,8 @@
 (require 'window-numbering)
 (window-numbering-mode 1)
 
+(add-to-list 'load-path "~/emacs_libs/feature-mode")
+(require 'feature-mode)
+(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
 
 (provide 'my-config)
