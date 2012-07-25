@@ -1,0 +1,5 @@
+#name: Scenario: Name
+# --
+@qa
+Scenario: ${1:Name}
+  $0
