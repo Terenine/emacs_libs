@@ -206,6 +206,14 @@
 ; end YASnippet
 ; ----------------------------------------------------------------------
 
+; ----------------------------------------------------------------------
+; Commenting
+(require 'newcomment)
+(global-set-key (kbd "\C-c /") 'comment-dwim)
+(global-set-key (kbd "\C-c #") 'comment-dwim)
+; end Commenting
+; ----------------------------------------------------------------------
+
 
 (defun swap-values (symbol1 symbol2)
   "Swap the values of SYMBOL1 and SYMBOL2.
