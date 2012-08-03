@@ -1,0 +1,5 @@
+#name : bfa Rspec before :all
+# --
+before :all do
+  $0
+end

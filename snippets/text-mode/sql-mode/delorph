@@ -1,3 +1,0 @@
-#name : delorph - delete orphaned rows
-# --
-DELETE FROM ${1:child_table} WHERE ${2:child_id} IN (SELECT $2 FROM (SELECT t1.$2 AS $2 FROM $1 t1 LEFT JOIN ${3:parent_table} t2 ON t1.${4:parent_key}=t2.${5:parent_id} WHERE t2.$5 IS NULL) AS dummy);

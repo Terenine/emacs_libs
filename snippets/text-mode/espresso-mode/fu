@@ -1,5 +1,0 @@
-#name : fu (Multi-line Anonymous function())
-# --
-function ($1) {
-  $0
-}

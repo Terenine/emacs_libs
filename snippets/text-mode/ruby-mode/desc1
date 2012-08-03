@@ -1,7 +1,0 @@
-#name : desc1 Rspec 1.x describe
-# --
-RSPEC 1.x: require File.dirname(__FILE__) + '/../spec_helper'
-
-describe ${klass} do
-  $0
-end

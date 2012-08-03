@@ -1,3 +1,0 @@
-#name : f (Single-line Anonymous function())
-# --
-function ($1) {$0}

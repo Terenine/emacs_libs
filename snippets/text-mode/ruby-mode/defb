@@ -1,7 +1,0 @@
-#name : define_builder
-# --
-define_builder(${1:ModelClass}) do |klass,overrides|
-  klass.new(
-            $0
-            )
-end

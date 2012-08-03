@@ -1,7 +1,0 @@
-#name : desc Rspec describe
-# --
-require 'spec_helper'
-
-describe ${klass} do
-  $0
-end

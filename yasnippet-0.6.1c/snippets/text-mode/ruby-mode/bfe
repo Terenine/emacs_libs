@@ -1,0 +1,5 @@
+#name : bfe Rspec before :each
+# --
+before :each do
+  $0
+end

@@ -1,7 +1,0 @@
-#name : describe "scenario..." do ... end
-# --
-describe "${scenario}" do
-  it "${does something}" do
-    $0
-  end
-end
