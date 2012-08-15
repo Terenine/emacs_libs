@@ -54,10 +54,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ecb-auto-activate t)
- '(ecb-layout-window-sizes nil)
- '(ecb-options-version "2.40")
- '(ecb-source-path (quote (("~/git" "git") ("~/git/sinatra/spa-extjs" "SPA Extjs"))))
+ ;; '(ecb-auto-activate t)
+ ;; '(ecb-layout-window-sizes nil)
+ ;; '(ecb-options-version "2.40")
+ ;; '(ecb-source-path (quote (("~/git" "git") ("~/git/sinatra/spa-extjs" "SPA Extjs"))))
  '(exec-path (quote ("/usr/local/Cellar/erlang/R14B03/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin" "/usr/texbin" "/Library/Frameworks/Python.framework/Versions/2.7/bin")))
  '(org-adapt-indentation t)
  '(org-agenda-files (quote ("~/org/gtd.org" "~/org/RCC.org" "~/org/journal.org" "~/org/Olive.org" "~/org/Work.org")))
@@ -284,3 +284,62 @@ See `transpose-regions' for LEAVE-MARKERS."
               (setq lines (cons (cons beg end) lines))))
           (forward-line))
         (shuffle-regions lines t)))))
+(put 'narrow-to-region 'disabled nil)
+
+
+;; ----------------------------------------------------------------------
+;; window hacks from Dave (which he probably stole from somewhere else)
+;; delete-other-window
+;; WRITE ME! This is tricksy, because ideally I'd like to take C-u arg
+;; and delete THAT window. For now, all I really want is the ability
+;; to delete the window on the other side of the split. For now I
+;; guess I can make separate macros for delete-next-window and
+;; delete-previous-window, which are the two that I would be using
+;; nomally anyway.
+
+;; Moves to next window, deletes it, then moves back to the window you
+;; were originally in.
+(fset 'delete-next-window
+      "\C-xo\C-x0\C-u-1\C-xo")
+(global-set-key (kbd "\C-x C-0") 'delete-next-window)
+
+;; Moves back to previous window, then deletes it, returning point to
+;; the window you were originally in.
+(fset 'delete-previous-window
+      "\C-u-1\C-xo\C-x0")
+(global-set-key (kbd "\C-x M-0") 'delete-previous-window)
+
+;; Stolen from Steve Yegge's .emacs file
+(defun swap-windows ()
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond ((/= (count-windows) 2)
+         (message "You need exactly 2 windows to do this."))
+        (t
+         (let* ((w1 (first (window-list)))
+                (w2 (second (window-list)))
+                (b1 (window-buffer w1))
+                (b2 (window-buffer w2))
+                (s1 (window-start w1))
+                (s2 (window-start w2)))
+           (set-window-buffer w1 b2)
+           (set-window-buffer w2 b1)
+           (set-window-start w1 s2)
+           (set-window-start w2 s1))))
+  (other-window 1))
+
+;; TODO: This defun needs a much better name!
+(defun split-window-right-last-buffer ()
+  "Splits window right, but instead of duplicating the current buffer, it opens the last buffer you visited before this one"
+  (interactive)
+  (cond ((/= (count-windows) 1)
+         (message "You need exactly 1 window open to do this."))
+        (t
+         (split-window-right)
+         (let* ((w2 (second (window-list)))
+                (b2 (second (buffer-list))))
+           (set-window-buffer w2 b2)))))
+
+;; like C-x o, only backwards. Yay!
+;; doesn't work with C-u, though. boo.
+(global-set-key (kbd "\C-x p") 'previous-multiframe-window)
