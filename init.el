@@ -213,6 +213,12 @@
 ; ----------------------------------------------------------------------
 
 
+; ----------------------------------------------------------------------
+; Toggle case
+(require 'toggle-case)
+; end Toggle case
+; ----------------------------------------------------------------------
+
 (defun swap-values (symbol1 symbol2)
   "Swap the values of SYMBOL1 and SYMBOL2.
 Return the former value of SYMBOL1, the final value of SYMBOL2."
