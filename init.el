@@ -54,17 +54,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(ecb-auto-activate t)
- ;; '(ecb-layout-window-sizes nil)
- ;; '(ecb-options-version "2.40")
- ;; '(ecb-source-path (quote (("~/git" "git") ("~/git/sinatra/spa-extjs" "SPA Extjs"))))
+ '(ecb-options-version "2.40")
  '(exec-path (quote ("/usr/local/Cellar/erlang/R14B03/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin" "/usr/texbin" "/Library/Frameworks/Python.framework/Versions/2.7/bin")))
  '(org-adapt-indentation t)
  '(org-agenda-files (quote ("~/org/gtd.org" "~/org/RCC.org" "~/org/journal.org" "~/org/Olive.org" "~/org/Work.org")))
  '(org-export-latex-default-class "koma-article")
  '(org-special-ctrl-a/e t)
  '(org-tags-exclude-from-inheritance (quote ("project")))
- '(org-use-tag-inheritance nil))
+ '(org-use-tag-inheritance nil)
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
 
 
 ;;(find-file "~/org/journal.org")
