@@ -87,3 +87,5 @@
 
 (global-set-key (kbd "\C-c C-_") 'textmate-case/toggle2)
 (global-set-key (kbd "\C-c C--") 'textmate-case/toggle)
+
+(provide 'toggle-case)
