@@ -347,3 +347,6 @@ See `transpose-regions' for LEAVE-MARKERS."
 ;; like C-x o, only backwards. Yay!
 ;; doesn't work with C-u, though. boo.
 (global-set-key (kbd "\C-x p") 'previous-multiframe-window)
+
+;; Disable set-goal-column because I finger fudge it all the time
+(global-unset-key (kbd "\C-x C-n"))
