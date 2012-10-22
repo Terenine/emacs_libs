@@ -137,6 +137,7 @@
 ;;(require 'csharp-config)
 ;;(require 'python-config)
 (require 'ruby-config)
+(require 'javascript-config)
 
 ;; comment helpers from dbrady (could probably be replaced with snippets)
 (require 'comment-config)
@@ -186,5 +187,14 @@
 (add-to-list 'load-path "~/emacs_libs/feature-mode")
 (require 'feature-mode)
 (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+
+(defun set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell 
+      (replace-regexp-in-string "[[:space:]\n]*$" "" 
+        (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+(when (equal system-type 'darwin) (set-exec-path-from-shell-PATH))
+
 
 (provide 'my-config)

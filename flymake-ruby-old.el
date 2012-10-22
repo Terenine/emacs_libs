@@ -12,7 +12,7 @@
 
 ;;; Code:
 
-(defconst flymake-ruby-err-line-patterns '(("^\\(.*\.rb\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3)))
+(defconst flymake-ruby-err-line-patterns '(("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3)))
 
 (defvar flymake-ruby-executable "ruby"
   "The ruby executable to use for syntax checking.")
@@ -29,7 +29,7 @@ location."
 (defun flymake-ruby-init ()
   "Construct a command that flymake can use to check ruby source."
   (list flymake-ruby-executable
-        (list "-w" "-c" (flymake-init-create-temp-buffer-copy
+        (list "-c" (flymake-init-create-temp-buffer-copy
                     'flymake-ruby--create-temp-in-system-tempdir))))
 
 ;;;###autoload
@@ -44,7 +44,7 @@ does not alter flymake's global configuration, so function
   (set (make-local-variable 'flymake-err-line-patterns) flymake-ruby-err-line-patterns)
   (if (executable-find flymake-ruby-executable)
       (flymake-mode t)
-    (message "Not enabling flymake: '%s' command not found" flymake-ruby-executable)))
+    (message "Not enabling flymake: '%' command not found" flymake-ruby-executable)))
 
 
 (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)

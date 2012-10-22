@@ -350,3 +350,44 @@ See `transpose-regions' for LEAVE-MARKERS."
 
 ;; Disable set-goal-column because I finger fudge it all the time
 (global-unset-key (kbd "\C-x C-n"))
+
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/emacs_libs/ac-dict")
+(ac-config-default)
+
+(add-to-list 'load-path "~/emacs_libs/eproject/")
+(require 'eproject)
+(require 'eproject-extras)
+
+;; eproject global bindings
+(defmacro .emacs-curry (function &rest args)
+  `(lambda () (interactive)
+     (,function ,@args)))
+
+(defmacro .emacs-eproject-key (key command)
+  (cons 'progn
+        (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
+              collect
+              `(global-set-key
+                (kbd ,(format "C-c p %s" k))
+                (.emacs-curry ,command ,p)))))
+
+(.emacs-eproject-key "k" eproject-kill-project-buffers)
+(.emacs-eproject-key "v" eproject-revisit-project)
+(.emacs-eproject-key "b" eproject-ibuffer)
+(.emacs-eproject-key "o" eproject-open-all-project-files)
+
+(defun build-ctags ()
+  (interactive)
+  (message "building project tags")
+  (let ((root (eproject-root)))
+    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=extjs --exclude=ext-* --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+  (visit-project-tags)
+  (message "tags built successfully"))
+
+(defun visit-project-tags ()
+  (interactive)
+  (let ((tags-file (concat (eproject-root) "TAGS")))
+    (visit-tags-table tags-file)
+    (message (concat "Loaded " tags-file))))
+
