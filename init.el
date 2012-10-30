@@ -92,14 +92,11 @@
  '(default ((t (:inherit nil :stipple nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "unknown" :family "DejaVu Sans")))))
 
 
-;; Turn on linum-mode by default
+;; Don't turn on linum-mode by default, it crashes org-mode. Ok to
+;; turn it on for various modes, however.
 (require 'linum)
-; DO NOT ENABLE LINUM MODE GLOBALLY!
-; linum crashes org-mode. Happily, org-mode overrides C-c l.
-; org mode appears to have seized this all round. What gives?
 (global-set-key "\C-c l" 'linum-mode)
 
-; ok to use mode hooks to auto-enable linum-mode, though
 (defun enable-linum-mode ()
   (linum-mode t))
 
@@ -111,6 +108,8 @@
                                  coffee-mode-hook
                                  feature-mode-hook
                                  java-mode-hook
+                                 js-mode-hook
+                                 javascript-mode-hook
                                  espresso-mode-hook
                                  haml-mode-hook
                                  lisp-mode-hook
@@ -185,6 +184,9 @@
 ; entirely sure why. Ideally it would be nice to be able to find a
 ; buffer by the complete pathname it is visiting, as this would remain
 ; constant and unique.
+; TODO: This uses buffername, which can be e.g. test.txt<2> if you
+; have multiple text.txt files open. Ideally we should figure out what
+; the proper filename of the buffer is and grab that.
 (defun reload-buffer()
   (interactive)
   (let ((buffername (buffer-name)))
