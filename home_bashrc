@@ -1,0 +1,19 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+alias 'gst'='git status'
+alias 'go'='git checkout'
+alias 'be'='bundle exec'
+alias 'bex'='bundle exec'
+alias 'ber'='bundle exec rspec'
+
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+. ~/.rvm/contrib/ps1_functions
+ps1_set $
