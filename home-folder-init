@@ -1,0 +1,24 @@
+#!/bin/sh
+
+cd ~
+rm -Rf .emacs.d
+rm .bashrc
+rm .bash_profile
+rm .gitconfig
+rm .git-completion.bash
+rm .tmux.conf
+rm .ackrc
+
+mkdir   ~/.emacs.d
+
+ln -s   ~/emacs_libs/home_bashrc   .bashrc
+ln -s   ~/emacs_libs/home_bash_profile   .bash_profile
+
+ln -s ~/emacs_libs/home_emacsd_init_el   ~/.emacs.d/init.el
+ln -s ~/emacs_libs/home_git-completion.bash   ~/.git-completion.bash
+ln -s ~/emacs_libs/home_gitconfig   ~/.gitconfig
+ln -s ~/emacs_libs/home_tmux.conf   ~/.tmux.conf
+ln -s ~/emacs_libs/home_ackrc   ~/.ackrc 
+
+
+source ~/.bashrc
