@@ -74,16 +74,16 @@
 ;;(load-theme 'solarized-dark t)
 (require 'color-theme)
 (require 'color-theme-solarized)
-	(color-theme-initialize)
-	;;	(color-theme-calm-forest)
-	;;	(color-theme-goldenrod)
-	;;	(color-theme-robin-hood)
-	;;	(color-theme-gnome2)
-;;	 	(color-theme-ld-dark)
+  (color-theme-initialize)
+  ;;	(color-theme-calm-forest)
+  ;;	(color-theme-goldenrod)
+  ;;	(color-theme-robin-hood)
+  ;;	(color-theme-gnome2)
+;;    (color-theme-ld-dark)
 ;;	(color-theme-clarity)
         (color-theme-solarized-dark)
 
-;; 	The value is in 1/10pt, so 100 will give you 10pt, etc.
+;;  The value is in 1/10pt, so 100 will give you 10pt, etc.
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -350,6 +350,33 @@ See `transpose-regions' for LEAVE-MARKERS."
 ;; doesn't work with C-u, though. boo.
 (global-set-key (kbd "\C-x p") 'previous-multiframe-window)
 
+;; ---------------------------------------------------------------------
+;; make-emacs-shutup-about-font-lock-syntactic-keywords
+;;
+;; Run this if you open a mixed-mode (html+js+erb, usually) file and
+;; get these errors:
+;;
+;; Warning: `font-lock-beginning-of-syntax-function' is an obsolete variable (as
+;; of 23.3); use `syntax-begin-function' instead.
+;; Warning: `font-lock-syntactic-keywords' is an obsolete variable (as of 24.1);
+;; use `syntax-propertize-function' instead.
+;;
+;;
+;; Fixes emacs 24 bug when opening erb/js/html mixed-mode files. I
+;; haven't figured out how to run this automatically; the bug occurs
+;; in some code that is lazily loaded AFTER emacs has finished
+;; starting up (well, after all hookable methods I could find have
+;; already finished at any rate). You can run this at any time after
+;; startup has finished (i.e. as soon as you have control of emacs).
+;; Once you run this function you won't get those font-lock- syntax
+;; errors for the rest of your emacs session.
+(defun make-emacs-shutup-about-font-lock-syntactic-keywords ()
+  (interactive)
+  (add-to-list 'byte-compile-not-obsolete-vars
+               'font-lock-beginning-of-syntax-function)
+  (add-to-list 'byte-compile-not-obsolete-vars
+               'font-lock-syntactic-keywords))
+
 ;; Disable set-goal-column because I finger fudge it all the time
 (global-unset-key (kbd "\C-x C-n"))
 
@@ -392,4 +419,3 @@ See `transpose-regions' for LEAVE-MARKERS."
   (let ((tags-file (concat (eproject-root) "TAGS")))
     (visit-tags-table tags-file)
     (message (concat "Loaded " tags-file))))
-
