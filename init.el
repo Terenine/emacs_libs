@@ -74,16 +74,16 @@
 ;;(load-theme 'solarized-dark t)
 (require 'color-theme)
 (require 'color-theme-solarized)
-	(color-theme-initialize)
-	;;	(color-theme-calm-forest)
-	;;	(color-theme-goldenrod)
-	;;	(color-theme-robin-hood)
-	;;	(color-theme-gnome2)
-;;	 	(color-theme-ld-dark)
+  (color-theme-initialize)
+  ;;	(color-theme-calm-forest)
+  ;;	(color-theme-goldenrod)
+  ;;	(color-theme-robin-hood)
+  ;;	(color-theme-gnome2)
+;;    (color-theme-ld-dark)
 ;;	(color-theme-clarity)
         (color-theme-solarized-dark)
 
-;; 	The value is in 1/10pt, so 100 will give you 10pt, etc.
+;;  The value is in 1/10pt, so 100 will give you 10pt, etc.
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -92,14 +92,11 @@
  '(default ((t (:inherit nil :stipple nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "unknown" :family "DejaVu Sans")))))
 
 
-;; Turn on linum-mode by default
+;; Don't turn on linum-mode by default, it crashes org-mode. Ok to
+;; turn it on for various modes, however.
 (require 'linum)
-; DO NOT ENABLE LINUM MODE GLOBALLY!
-; linum crashes org-mode. Happily, org-mode overrides C-c l.
-; org mode appears to have seized this all round. What gives?
 (global-set-key "\C-c l" 'linum-mode)
 
-; ok to use mode hooks to auto-enable linum-mode, though
 (defun enable-linum-mode ()
   (linum-mode t))
 
@@ -111,6 +108,8 @@
                                  coffee-mode-hook
                                  feature-mode-hook
                                  java-mode-hook
+                                 js-mode-hook
+                                 javascript-mode-hook
                                  espresso-mode-hook
                                  haml-mode-hook
                                  lisp-mode-hook
@@ -185,6 +184,9 @@
 ; entirely sure why. Ideally it would be nice to be able to find a
 ; buffer by the complete pathname it is visiting, as this would remain
 ; constant and unique.
+; TODO: This uses buffername, which can be e.g. test.txt<2> if you
+; have multiple text.txt files open. Ideally we should figure out what
+; the proper filename of the buffer is and grab that.
 (defun reload-buffer()
   (interactive)
   (let ((buffername (buffer-name)))
@@ -348,7 +350,6 @@ See `transpose-regions' for LEAVE-MARKERS."
 ;; doesn't work with C-u, though. boo.
 (global-set-key (kbd "\C-x p") 'previous-multiframe-window)
 
-
 ;; ---------------------------------------------------------------------
 ;; make-emacs-shutup-about-font-lock-syntactic-keywords
 ;;
@@ -376,3 +377,45 @@ See `transpose-regions' for LEAVE-MARKERS."
   (add-to-list 'byte-compile-not-obsolete-vars
                'font-lock-syntactic-keywords))
 
+;; Disable set-goal-column because I finger fudge it all the time
+(global-unset-key (kbd "\C-x C-n"))
+
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/emacs_libs/ac-dict")
+(ac-config-default)
+
+(add-to-list 'load-path "~/emacs_libs/eproject/")
+(require 'eproject)
+(require 'eproject-extras)
+
+;; eproject global bindings
+(defmacro .emacs-curry (function &rest args)
+  `(lambda () (interactive)
+     (,function ,@args)))
+
+(defmacro .emacs-eproject-key (key command)
+  (cons 'progn
+        (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
+              collect
+              `(global-set-key
+                (kbd ,(format "C-c p %s" k))
+                (.emacs-curry ,command ,p)))))
+
+(.emacs-eproject-key "k" eproject-kill-project-buffers)
+(.emacs-eproject-key "v" eproject-revisit-project)
+(.emacs-eproject-key "b" eproject-ibuffer)
+(.emacs-eproject-key "o" eproject-open-all-project-files)
+
+(defun build-ctags ()
+  (interactive)
+  (message "building project tags")
+  (let ((root (eproject-root)))
+    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=extjs --exclude=ext-* --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+  (visit-project-tags)
+  (message "tags built successfully"))
+
+(defun visit-project-tags ()
+  (interactive)
+  (let ((tags-file (concat (eproject-root) "TAGS")))
+    (visit-tags-table tags-file)
+    (message (concat "Loaded " tags-file))))
