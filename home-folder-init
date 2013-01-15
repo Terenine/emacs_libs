@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd ~
-rm -Rf .emacs.d
+rm ~/.emacs.d/init.el
 rm .bashrc
 rm .bash_profile
 rm .gitconfig
@@ -10,15 +10,17 @@ rm .tmux.conf
 rm .ackrc
 
 mkdir   ~/.emacs.d
+cd ~/.emacs.d
+ln -s ~/emacs_libs/home_emacsd_init_el init.el
+
+cd ~/
 
 ln -s   ~/emacs_libs/home_bashrc   .bashrc
 ln -s   ~/emacs_libs/home_bash_profile   .bash_profile
-
-ln -s ~/emacs_libs/home_emacsd_init_el   ~/.emacs.d/init.el
-ln -s ~/emacs_libs/home_git-completion.bash   ~/.git-completion.bash
-ln -s ~/emacs_libs/home_gitconfig   ~/.gitconfig
-ln -s ~/emacs_libs/home_tmux.conf   ~/.tmux.conf
-ln -s ~/emacs_libs/home_ackrc   ~/.ackrc 
+ln -s ~/emacs_libs/home_git-completion.bash   .git-completion.bash
+ln -s ~/emacs_libs/home_gitconfig   .gitconfig
+ln -s ~/emacs_libs/home_tmux.conf   .tmux.conf
+ln -s ~/emacs_libs/home_ackrc   .ackrc 
 
 
 source ~/.bashrc
