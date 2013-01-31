@@ -1,0 +1,44 @@
+# 
+#    ~/.arcrc 
+#    ack utility config file
+#    requires ACKRC= <<this file>> in the env. I set it in .bashrc (home_bashrc)
+#
+
+## break display btwn files
+--break
+
+## hightlight matching
+--color
+
+
+
+## Display the name of the file and the count only
+#--count
+
+##  Instead of placing entries found under a file path heading, the file path is listed at the begging of each line 
+# --noheading
+
+## Page by Page the same as other utils
+--pager=less -iqRS  --no-init --no-lessopen --quit-if-one-screen --line-numbers
+
+## only search with case sensitivity if there is mixed case
+--smart-case
+# --ignore-case
+
+##  Sort the files
+--sort-files
+
+##  ignore extjs source folders
+--ignore-dir=extjs-4.1.3
+--ignore-dir=ext-4.1.1a
+--ignore-dir=log
+
+## use --type=spa to search all of this group
+#--type-set=spa=.css,.scss,.html,.htm,.erb,.js,.rb
+#--type-set=spaui=.css,.scss,.html,.htm,.erb,.js
+
+## lines to display before and after a line matched
+--before-context=3
+--after-context=3
+
+

@@ -6,31 +6,19 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# User specific aliases and functions                                                                                                                                                                                                                                                                                        alias 'gst'='git status'
-alias 'go'='git checkout'
-alias 'be'='bundle exec'
-alias 'bex'='bundle exec'
-alias 'ber'='bundle exec rspec'
-alias 'gco'='git co'
-alias 'gci'='git ci'
-alias 'grb'='git rb'
-
-
 # env variables                                                                                                                                                                                                                                                                                                      
-export ACKRC=".ackrc"
+export ACKRC=".ackrc"  # ack configuration
 
-source ~/git-completion.bash
+source ~/.git-completion.bash
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-
 
 PATH=$home/bin/Sencha/Cmd/3.0.0.190:$PATH
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/bin 
 export PATH
 
-export SENCHA_CMD_3_0_0="/Users/kevinplotner/bin/Sencha/Cmd/3.0.0.190"
+#export SENCHA_CMD_3_0_0="/Users/<<username>>/Sencha/Cmd/3.0.0.190"
 
 . ~/.rvm/contrib/ps1_functions
 ps1_set $
