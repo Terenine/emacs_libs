@@ -1,0 +1,24 @@
+# .bashrc
+# linux uses .bashrc for non-login shell
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+# env variables                                                                                                                                                                                                                                                                                                      
+export ACKRC=".ackrc"  # ack configuration
+
+source ~/.git-completion.bash
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+PATH=$home/bin/Sencha/Cmd/3.0.0.190:$PATH
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/bin 
+export PATH
+
+#export SENCHA_CMD_3_0_0="/Users/<<username>>/Sencha/Cmd/3.0.0.190"
+
+. ~/.rvm/contrib/ps1_functions
+ps1_set $

@@ -1,0 +1,33 @@
+[user]
+	email = secoast@gmail.com
+	name = Kevin Plotner
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red
+  new = green
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[alias]
+   gst=git status
+   be=bundle exec
+   bex=bundle exec
+   ber=bundle exec rspec
+   gco=git checkout
+   gci=git commit
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  glog = log --graph
+  discover = blame
+  praise = blame
+[push]
+	default = current
