@@ -26,7 +26,7 @@
 ;;(define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
   '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
+   "* TODO %?\n  %i\n  %a")
    ("j" "Journal" entry (file+datetree "~/org/journal.org")
     "* %?\nEntered on %U\n  %i\n  %a")))
 ;;MobileOrg settings
@@ -36,17 +36,17 @@
 (unless (boundp 'org-export-latex-classes)
   (setq org-export-latex-classes nil))
 (add-to-list 'org-export-latex-classes
-             '("article"
-               "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))
+       '("article"
+   "\\documentclass{article}"
+   ("\\section{%s}" . "\\section*{%s}")))
 (add-to-list 'org-export-latex-classes
-          '("koma-article"
-             "\\documentclass{scrartcl}"
-             ("\\section{%s}" . "\\section*{%s}")
-             ("\\subsection{%s}" . "\\subsection*{%s}")
-             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-             ("\\paragraph{%s}" . "\\paragraph*{%s}")
-             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    '("koma-article"
+       "\\documentclass{scrartcl}"
+       ("\\section{%s}" . "\\section*{%s}")
+       ("\\subsection{%s}" . "\\subsection*{%s}")
+       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 
 (custom-set-variables
@@ -70,6 +70,13 @@
 ;;(find-file "~/org/gtd.org")
 ;;(find-file "~/org/Work.org")
 
+;;(require 'global-hi-line-mode 1)
+;;(set-face-background 'hi-line "#330")
+
+(require 'highlight-current-line)
+(highlight-current-line-on 1)
+(set-face-background 'highlight-current-line-face "grey10")
+
 ;;custom color settings
 ;;(load-theme 'solarized-dark t)
 (require 'color-theme)
@@ -81,7 +88,7 @@
   ;;	(color-theme-gnome2)
 ;;    (color-theme-ld-dark)
 ;;	(color-theme-clarity)
-        (color-theme-solarized-dark)
+  (color-theme-solarized-dark)
 
 ;;  The value is in 1/10pt, so 100 will give you 10pt, etc.
 (custom-set-faces
@@ -103,26 +110,26 @@
 ; ----------------------------------------------------------------------
 ; Automatically enable linum mode for various modes
 (setq modes-to-hook-with-linum '(c-mode-hook
-                                 csv-mode-hook
-                                 emacs-lisp-mode-hook
-                                 coffee-mode-hook
-                                 feature-mode-hook
-                                 java-mode-hook
-                                 js-mode-hook
-                                 javascript-mode-hook
-                                 espresso-mode-hook
-                                 haml-mode-hook
-                                 lisp-mode-hook
-                                 nxml-mode-hook
-                                 php-mode-hook
-                                 ruby-mode-hook
-                                 sass-mode-hook
-                                 scss-mode-hook
-                                 sh-mode-hook
-                                 text-mode-hook
-                                 textile-mode-hook
-                                 xml-mode-hook
-                                 yaml-mode-hook))
+   csv-mode-hook
+   emacs-lisp-mode-hook
+   coffee-mode-hook
+   feature-mode-hook
+   java-mode-hook
+   js-mode-hook
+   javascript-mode-hook
+   espresso-mode-hook
+   haml-mode-hook
+   lisp-mode-hook
+   nxml-mode-hook
+   php-mode-hook
+   ruby-mode-hook
+   sass-mode-hook
+   scss-mode-hook
+   sh-mode-hook
+   text-mode-hook
+   textile-mode-hook
+   xml-mode-hook
+   yaml-mode-hook))
 
 (defun hook-linum-mode (mode)
   (add-hook mode 'enable-linum-mode))
@@ -237,7 +244,7 @@ leave-markers)
       (swap-values 'startr2 'endr2))
   (if (> startr1 startr2)
       (progn (swap-values 'startr1 'startr2)
-             (swap-values 'endr1 'endr2)))
+       (swap-values 'endr1 'endr2)))
   (if (= startr1 endr1)
       (setq endr1 startr2))
   (if (= startr2 endr2)
@@ -257,22 +264,22 @@ See `transpose-regions' for LEAVE-MARKERS."
   (let ((n (length regions)))
     (while (> n 1)
       (let ((r (random n)))
-        (if (zerop r)
-            (setq regions (cdr regions))
-          (let* ((a (car regions)) (b (elt regions r))
-                 (x (- (- (cdr a) (car a)) (- (cdr b) (car b)))))
-            (transpose-regions-allow-empty
-             (car a) (cdr a) (car b) (cdr b) leave-markers)
-            (setq regions (cdr regions))
-            (let ((iter regions))
-              (while iter
-                (let ((i (car iter)))
-                  (if (eq i b)
-                      (progn (setcdr i (+ x (cdr i)))
-                             (setq iter nil))
-                    (setcar i (+ x (car i)))
-                    (setcdr i (+ x (cdr i)))))
-                (setq iter (cdr iter)))))))
+  (if (zerop r)
+      (setq regions (cdr regions))
+    (let* ((a (car regions)) (b (elt regions r))
+     (x (- (- (cdr a) (car a)) (- (cdr b) (car b)))))
+      (transpose-regions-allow-empty
+       (car a) (cdr a) (car b) (cdr b) leave-markers)
+      (setq regions (cdr regions))
+      (let ((iter regions))
+  (while iter
+    (let ((i (car iter)))
+      (if (eq i b)
+    (progn (setcdr i (+ x (cdr i)))
+     (setq iter nil))
+  (setcar i (+ x (car i)))
+  (setcdr i (+ x (cdr i)))))
+    (setq iter (cdr iter)))))))
       (setq n (1- n)))))
 
 (defun shuffle-lines (beg end)
@@ -283,13 +290,13 @@ See `transpose-regions' for LEAVE-MARKERS."
       (narrow-to-region beg end)
       (goto-char (point-min))
       (let (lines)
-        (while (not (eobp))
-          (let ((beg (point)))
-            (end-of-line)
-            (let ((end (point)))
-              (setq lines (cons (cons beg end) lines))))
-          (forward-line))
-        (shuffle-regions lines t)))))
+  (while (not (eobp))
+    (let ((beg (point)))
+      (end-of-line)
+      (let ((end (point)))
+  (setq lines (cons (cons beg end) lines))))
+    (forward-line))
+  (shuffle-regions lines t)))))
 (put 'narrow-to-region 'disabled nil)
 
 
@@ -320,18 +327,18 @@ See `transpose-regions' for LEAVE-MARKERS."
   "If you have 2 windows, it swaps them."
   (interactive)
   (cond ((/= (count-windows) 2)
-         (message "You need exactly 2 windows to do this."))
-        (t
-         (let* ((w1 (first (window-list)))
-                (w2 (second (window-list)))
-                (b1 (window-buffer w1))
-                (b2 (window-buffer w2))
-                (s1 (window-start w1))
-                (s2 (window-start w2)))
-           (set-window-buffer w1 b2)
-           (set-window-buffer w2 b1)
-           (set-window-start w1 s2)
-           (set-window-start w2 s1))))
+   (message "You need exactly 2 windows to do this."))
+  (t
+   (let* ((w1 (first (window-list)))
+    (w2 (second (window-list)))
+    (b1 (window-buffer w1))
+    (b2 (window-buffer w2))
+    (s1 (window-start w1))
+    (s2 (window-start w2)))
+     (set-window-buffer w1 b2)
+     (set-window-buffer w2 b1)
+     (set-window-start w1 s2)
+     (set-window-start w2 s1))))
   (other-window 1))
 
 ;; TODO: This defun needs a much better name!
@@ -339,12 +346,12 @@ See `transpose-regions' for LEAVE-MARKERS."
   "Splits window right, but instead of duplicating the current buffer, it opens the last buffer you visited before this one"
   (interactive)
   (cond ((/= (count-windows) 1)
-         (message "You need exactly 1 window open to do this."))
-        (t
-         (split-window-right)
-         (let* ((w2 (second (window-list)))
-                (b2 (second (buffer-list))))
-           (set-window-buffer w2 b2)))))
+   (message "You need exactly 1 window open to do this."))
+  (t
+   (split-window-right)
+   (let* ((w2 (second (window-list)))
+    (b2 (second (buffer-list))))
+     (set-window-buffer w2 b2)))))
 
 ;; like C-x o, only backwards. Yay!
 ;; doesn't work with C-u, though. boo.
@@ -373,9 +380,9 @@ See `transpose-regions' for LEAVE-MARKERS."
 (defun make-emacs-shutup-about-font-lock-syntactic-keywords ()
   (interactive)
   (add-to-list 'byte-compile-not-obsolete-vars
-               'font-lock-beginning-of-syntax-function)
+   'font-lock-beginning-of-syntax-function)
   (add-to-list 'byte-compile-not-obsolete-vars
-               'font-lock-syntactic-keywords))
+   'font-lock-syntactic-keywords))
 
 ;; Disable set-goal-column because I finger fudge it all the time
 (global-unset-key (kbd "\C-x C-n"))
@@ -395,11 +402,11 @@ See `transpose-regions' for LEAVE-MARKERS."
 
 (defmacro .emacs-eproject-key (key command)
   (cons 'progn
-        (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
-              collect
-              `(global-set-key
-                (kbd ,(format "C-c p %s" k))
-                (.emacs-curry ,command ,p)))))
+  (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
+  collect
+  `(global-set-key
+    (kbd ,(format "C-c p %s" k))
+    (.emacs-curry ,command ,p)))))
 
 (.emacs-eproject-key "k" eproject-kill-project-buffers)
 (.emacs-eproject-key "v" eproject-revisit-project)
