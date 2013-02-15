@@ -6,7 +6,8 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# env variables                                                                                                                                                                                                                                                                                                      
+# env variables                                                                                                                                                                                                                              
+export CLICOLOR=1  # osx color files/folders                                                                        
 export ACKRC=".ackrc"  # ack configuration
 
 source ~/.git-completion.bash
