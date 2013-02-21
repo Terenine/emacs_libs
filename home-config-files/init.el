@@ -389,7 +389,7 @@ See `transpose-regions' for LEAVE-MARKERS."
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/emacs_libs/ac-dict")
-(ac-config-default)
+;(ac-config-default)
 
 (add-to-list 'load-path "~/emacs_libs/eproject/")
 (require 'eproject)
