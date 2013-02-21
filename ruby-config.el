@@ -38,8 +38,10 @@
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml" . yaml-mode))
 
-					; Install mode-compile to give friendlier compiling support!
+          ; Install mode-compile to give friendlier compiling support!
 (autoload 'mode-compile "mode-compile"
   "Command to compile current buffer file based on the major mode" t)
 (global-set-key "\C-ck" 'mode-compile)
@@ -71,19 +73,19 @@
 
 (dolist (command '(yank yank-pop))
   (eval `(defadvice ,command (after indent-region activate)
-	   (and (not current-prefix-arg)
-		(member major-mode '(emacs-lisp-mode lisp-mode
-						     clojure-mode    scheme-mode
-						     haskell-mode    ruby-mode
-						     rspec-mode      python-mode
-						     c-mode          c++-mode
-						     objc-mode       latex-mode
-						     plain-tex-mode))
-		(let ((mark-even-if-inactive transient-mark-mode))
-		  (indent-region (region-beginning) (region-end) nil))))))
+     (and (not current-prefix-arg)
+    (member major-mode '(emacs-lisp-mode lisp-mode
+                 clojure-mode    scheme-mode
+                 haskell-mode    ruby-mode
+                 rspec-mode      python-mode
+                 c-mode          c++-mode
+                 objc-mode       latex-mode
+                 plain-tex-mode))
+    (let ((mark-even-if-inactive transient-mark-mode))
+      (indent-region (region-beginning) (region-end) nil))))))
 
 (add-hook 'ruby-mode-hook '(lambda ()
-			     (local-set-key (kbd "RET") 'reindent-then-newline-and-indent))) ;newline-and-indent)))
+           (local-set-key (kbd "RET") 'reindent-then-newline-and-indent))) ;newline-and-indent)))
 
 (require 'flymake-ruby)
 (require 'rspec-mode)
