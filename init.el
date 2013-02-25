@@ -380,9 +380,9 @@ See `transpose-regions' for LEAVE-MARKERS."
 ;; Disable set-goal-column because I finger fudge it all the time
 (global-unset-key (kbd "\C-x C-n"))
 
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/emacs_libs/ac-dict")
-(ac-config-default)
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/emacs_libs/ac-dict")
+;; (ac-config-default)
 
 (add-to-list 'load-path "~/emacs_libs/eproject/")
 (require 'eproject)
