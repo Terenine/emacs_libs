@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'trollop'
+
+opts = Trollop.options do
+  opt :size, "Maximum size", :type => :string, :default => '100m'
+  opt :name, "Sparseimage name", :type => :string
+  opt :volname, "Volume name", :type => :string
+end
+
+puts `hdiutil create -size #{opts[:size]} -volname #{opts[:volname]} -encryption -type SPARSE -fs HFS+ #{opts[:name]}`
+

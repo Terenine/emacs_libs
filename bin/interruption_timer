@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+k=(ARGV[0] || 0.07444).to_f
+i=0.0
+
+while(true)
+  puts("This interruption has cost the company $%3.2f" % i+=k)
+  sleep 1
+end

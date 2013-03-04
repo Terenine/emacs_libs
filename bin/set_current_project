@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+#
+# Set the current project, so you can auto cd to that folder when you
+# open a new terminal. Also sets up some handy aliases to jump into
+# the current project's databases: if the project folder has a
+# config/database.yml file in it, then for each environment defined
+# inside, a db* alias (e.g. db_development, db_test) will be created.
+# (Currently only supports mysql and psql.)
+#
+# set_current_project [<path>]
+#
+# If path is omitted, uses current folder.
+#
+# This will set a ./current_project file in your home folder and
+# export CURRENT_PROJECT into your environment. With the appropriate
+# code in your profile, this will automatically cd you into the
+# project folder as soon as you login.
+#
+# Add this to the end of your .profile or
+# .bashrc:
+#
+# if [[ -s ~/.current_project ]] ; then
+#     source ~/.current_project
+# fi
+#
+# Notes:
+#
+# * You can clear the current project by deleting the file, or running
+#   unset_current_project (which just deletes the file)
+#
+# * I think aliases like db_development are cleaner and easier to read
+#   than aliases like dbdevelopment, but dbd<TAB> is a LOT easier to
+#   type, so that's why.
+
+$known_databases = {
+  "psql" => {
+    "adapter" => /postgresql/,
+    "command" => "psql",
+    # psql does not accept password at command line. Sorry.
+    "short_switches" => { "username" => "U", "host" => "h", "port" => "p" },
+    "long_switches" => { },
+    "args" => ["database"]
+  },
+  "mysql" => {
+    "adapter" => /mysql(2)?/,
+    "command" => "mysql",
+    "short_switches" => { "username" => "u", "host" => "h", "port" => "P" },
+    "long_switches" => { "password" => "password" },
+    "args" => ["database"]
+  },
+  "sqlite3" => {
+    "adapter" => /sqlite3/,
+    "command" => "sqlite3",
+    "short_switches" => {},
+    "long_switches" => {},
+    "args" => ["database"]
+  }
+
+}
+
+target = ARGV[0] || Dir.pwd
+
+def fetch_adapter(adapter)
+  adapter = $known_databases.detect {|name, data| adapter =~ data["adapter"]}
+  adapter = adapter.last if adapter
+end
+
+def recognized_adapter?(env)
+  fetch_adapter env["adapter"]
+end
+
+def build_command_aliases(config)
+  aliases = []
+  config.each do |name, env|
+    next unless env.key?("database") && env.key?("adapter")
+    next unless recognized_adapter? env
+    adapter = fetch_adapter env["adapter"]
+    command = "%s %s %s %s" % [adapter["command"],
+                               adapter["short_switches"].map {|env_key, switch| '-%s "%s"' % [switch, env[env_key]] if env[env_key]}.compact.join(' '),
+                               adapter["long_switches"].map {|env_key, switch| '--%s="%s"' % [switch, env[env_key]] if env[env_key]}.compact.join(' '),
+                               adapter["args"].map {|env_key| env[env_key]}.compact.join(' ')]
+    command = command.gsub(/\s+/, ' ').strip
+    aliases << "alias 'db%s'='%s'" % [name, command]
+  end
+  aliases
+end
+
+
+aliases = []
+config_file = File.join(target, 'config/database.yml')
+if File.exists? config_file
+  require 'yaml'
+  # Don't use YAML.load_file, Syck barfs when the yaml file lacks \n at EOF
+  config = YAML.load(File.read(config_file) + "\n")
+  aliases = build_command_aliases config
+
+  puts '-' * 80
+  puts "Command aliases:"
+  puts aliases
+  puts '-' * 80
+end
+
+File.open(File.expand_path("~/.current_project"), "w") do |file|
+  file.puts "CURRENT_PROJECT=\"#{target}\""
+  file.puts 'cd "$CURRENT_PROJECT"'
+  file.puts
+  file.puts "# Aliases:"
+  file.puts %{alias 'cdp'="cd \\"$CURRENT_PROJECT\\""}
+  file.puts aliases
+end
+
+puts "Current project has been set to #{target}. You will automatically cd to this folder on login."

@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# bstubes - examine Beanstalk Queue Tube status
+
+# Sadness--had to rip out Ruport because of issues in 1.9 and/or JRuby
+# (not sure which, and didn't have time to diagnose it, and the point
+# is I only needed Ruport's text table rendering, not any of the
+# PdfWriter dependencies.)
+require 'rubygems'
+require 'trollop'
+require 'beanstalk-client'
+require 'terminal-table/import'
+
+opts = Trollop.options do
+  opt :port, "port", :type => :integer, :default => 11300
+  opt :host, "host", :default => "localhost"
+end
+
+columns  = %w[tube delayed ready reserved buried]
+states = columns[1..-1]
+column_sizes = Hash.new 0
+columns.each do |col|
+  column_sizes[col] = col.size
+end
+
+
+t = table columns
+
+hostport = "#{opts[:host]}:#{opts[:port]}"
+
+bs = Beanstalk::Pool.new([hostport])
+
+sums = Hash.new 0
+bs.list_tubes[hostport].each do |tube|
+  t << ([tube] + states.map {|state| stat = bs.stats_tube(tube)["current-jobs-#{state}"]; sums[state] += stat; stat})
+#   h = {"tube" => tube}
+#   %w[delayed ready reserved buried].each do |state|
+#     h[state] = bs.stats_tube(tube)["current-jobs-#{state}"]
+#   end
+#   t << h
+end
+
+t.add_separator
+t << (["TOTAL"] + states.map {|state| sums[state]})
+
+
+puts t
+
+# h = { "tube" => "TOTAL" }
+# %w[delayed ready reserved buried].each do |col|
+# #  h[col] = t.sum(col)
+#   h[col] = t.inject(0) {|acc, row| acc + row[col]}
+# end
+# t << h
+
+# longest_tube_name_length = [4, t.map { |row| row["tube"].size }.max].max
+
+# format = "| %#{longest_tube_name_length}s | %5d | %8d | %7d | %6d |"
+# header = "| %#{longest_tube_name_length}s | Ready | Reserved | Delayed | Buried |" % "Tube"
+# bar = header.gsub(/[^\|]/, "-").gsub(/[^\-]/, "+")
+
+
+# # Print the tabular data.
+# puts bar
+# puts header
+
+# puts bar
+# t[0...-1].each do |tube|
+#   puts format % [tube["tube"], tube["ready"], tube["reserved"], tube["delayed"], tube["buried"]]
+# end
+
+# puts bar
+# t[-1..-1].each do |tube|
+#   puts format % [tube["tube"], tube["ready"], tube["reserved"], tube["delayed"], tube["buried"]]
+# end
+
+# puts bar

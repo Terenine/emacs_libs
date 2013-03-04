@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# recursive ri--searches up the ri tree until it finds the first class
+# that has documentation for the method.
+
+# rri <class>#<method>
+# rri <class>.<method>
+
+klass, method_type, method = Regexp.new("^(.+?)([#\.])(.*)$").match(ARGV[0])[1..3]
+
+klass = Kernel.const_get(klass)
+puts "Class is #{klass}"
+ancestors = klass.ancestors
+
+puts "Class #{klass} has these ancestors: #{ancestors * ', '}"
+
+ancestors.each do |a|
+  cmd = "ri #{a}#{method_type}#{method}"
+  exit if system(cmd)
+end
+
+# still here? You're probably search for a method in Module, or
+# possibly Kernel/Object/Class that isn't explicitly in your
+# inheritance chain.
+
+extra_klasses = [Kernel, Class, Object, Module] - ancestors
+puts "Can't find #{method} in the hierarchy. It might be in one of the
+implicit classes. Checking: #{extra_klasses * ', '}"
+(extra_klasses).each do |a|
+  cmd = "ri #{a}#{method_type}#{method}"
+  exit if system(cmd)
+end
+
+puts "Sorry, I can't find that method anywhere in the inheritance hierarchy. Are you sure you didn't just imagine that it was there in the first place?"
+
+
+

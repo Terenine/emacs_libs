@@ -1,0 +1,4 @@
+#!/bin/sh
+# SVN-style checkout
+echo git checkout $*
+git checkout $*

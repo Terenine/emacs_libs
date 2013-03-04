@@ -1,0 +1,16 @@
+#!/bin/sh
+if [ $# -lt 1 ]; then
+  TARGET=spec
+else
+  TARGET=$*
+fi
+
+if [ -e 'Gemfile' ]; then
+    RSPEC="bundle exec rspec"
+else
+    RSPEC="rspec"
+fi
+
+echo "time $RSPEC $TARGET"
+time $RSPEC $TARGET
+

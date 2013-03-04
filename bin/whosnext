@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+# whosnext: randomly determine who's next in the "popcorn pairing" rotation
+#
+# Usage:
+#
+# whosnext --set chris.meadows david.brady chris.mcnabb shaun.eutsey
+# => Defines list of users participating
+#
+# whosnext --list
+# => Shows list of users participating
+# 
+# whosnext
+# => Show next user
+#
+# Features:
+# - Users are shuffled into "frames" so that in every frame each user
+#   gets exactly one turn
+#
+# - Frames are reshuffled at the end of each frame
+#
+# - The last user in a frame will never be the first user of the next
+#   frame
+
+srand((Time.now.to_f * 1000).to_i)
+
+# config = YAML.load_file '~/.whosnext.yml'
+
+
+seed = Time.now
+users = %w(chris.meadows david.brady chris.mcnabb shaun.eutsey)
+calls = 0
+
+
+File.open('~/.whosnext.yml') do |file|
+  file.puts {"seed" => seed, "users" => users, "calls" => calls }.to_yaml
+end
+
+
