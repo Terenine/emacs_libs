@@ -44,3 +44,9 @@ This config also includes Wrangler, a refactor tool for Erlang.  In order to get
 4) type "sudo make install" and hit enter
 
 Once this is complete your emacs should start without error.
+
+Optional Setup script
+---------------------
+There is a script named 'home-folder-init' that will automatically set links to configuration files in 'emacs_libs/home-config-files' directory.
+Please open the home-folder-init file and understand that it will delete existing files and replace them with links. If this is not what you
+want then copy the config files or create links to those you want.  You've been notified.
