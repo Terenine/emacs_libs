@@ -19,4 +19,7 @@ ln -s ~/emacs_libs/home-config-files/gitconfig   ~/.gitconfig
 ln -s ~/emacs_libs/home-config-files/tmux.conf   ~/.tmux.conf
 ln -s ~/emacs_libs/home-config-files/ackrc   ~/.ackrc 
 
+ln -s ~/emacs_libs/bin ~/bin
+
+
 source ~/.bashrc
