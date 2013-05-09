@@ -1,0 +1,3 @@
+#!/usr/bin/evn sh
+
+# cycle thru folders and when find spec, go up and run ber -f D

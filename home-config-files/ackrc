@@ -28,14 +28,15 @@
 ##  Sort the files
 --sort-files
 
-##  ignore extjs source folders
+##  ignore extjs source folders, logs and design
 --ignore-dir=extjs-4.1.3
 --ignore-dir=ext-4.1.1a
 --ignore-dir=log
+--ignore-dir=design
 
 ## use --type=spa to search all of this group
-#--type-set=spa=.css,.scss,.html,.htm,.erb,.js,.rb
-#--type-set=spaui=.css,.scss,.html,.htm,.erb,.js
+--type-set=spa=.css,.scss,.html,.htm,.erb,.js,.rb
+--type-set=spaui=.css,.scss,.html,.htm,.erb,.js
 
 ## lines to display before and after a line matched
 --before-context=3
